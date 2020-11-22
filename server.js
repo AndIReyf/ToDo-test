@@ -10,6 +10,7 @@ const app = express()
 const PORT = process.env.PORT || config.get('PORT')
 
 // Middleware
+app.use(require('./middleware/cors'))
 app.use(express.json())
 
 app.use('/api/items', require('./routes/api/items'))
