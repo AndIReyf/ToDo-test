@@ -22,11 +22,11 @@ export const todolistAPI = {
         return res.data
     },
     deleteItem(id: string) {
-        return instance.delete<ResponseMsgType>(`/${id}`)
+        return instance.delete(`/${id}`) as Promise<ResponseMsgType>
     },
 }
 
-type ResponseType = {
+export type ResponseType = {
     isDone: boolean
     _id: string
     title: string
@@ -34,9 +34,9 @@ type ResponseType = {
     order: number
 }
 
-type ResponseItemsType = Array<ResponseType>
+export type ResponseItemsType = Array<ResponseType>
 
-type ResponseMsgType = {
+export type ResponseMsgType = {
     msg?: string
     success: boolean
 }

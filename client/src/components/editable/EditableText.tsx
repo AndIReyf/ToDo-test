@@ -10,21 +10,21 @@ export const EditableText = React.memo(function EditableText({text, id, isDone}:
     const [mode, setMode] = React.useState(false)
     const [title, setTitle] = React.useState(text)
 
-    const toggleHandler = () => {
+    const toggleHandler = React.useCallback(() => {
         setMode(prevState => !prevState)
         setTitle(text)
-    }
+    }, [text])
 
-    const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeHandler = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value)
-    }
+    }, [])
 
-    const pressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const pressHandler = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode === 13 && title.trim()) {
             dispatch(changeTitle(id, title))
             toggleHandler()
         }
-    }
+    }, [dispatch, id, title, toggleHandler])
 
     return (
         <>

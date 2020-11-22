@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
     try {
         const item = await newItem.save()
 
-        if (!item) throw Error('Something went wrong saving the item')
+        if (!item) return res.status(400).json({msg: 'Something went wrong saving the item'})
 
         res.status(200).json(item)
 

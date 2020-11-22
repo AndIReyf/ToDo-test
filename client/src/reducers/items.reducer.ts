@@ -6,7 +6,6 @@ const initState: ItemsStateType = {
 }
 
 export const itemsReducer = (state: ItemsStateType = initState, action: ItemActionType): ItemsStateType => {
-
     switch (action.type) {
         case "GET_ITEMS":
             return {
@@ -31,22 +30,26 @@ export const itemsReducer = (state: ItemsStateType = initState, action: ItemActi
             return {
                 ...state,
                 items: state.items.map(i => i._id === action.payload._id
-                    ? {...i, title: action.payload.title}
-                    : i)
+                    ? {...i, title: action.payload.title} : i)
             }
         }
         case "SET_STATUS": {
             return {
                 ...state,
-                items: state.items.map(i => i._id === action.payload._id
-                    ? {...i, isDone: action.payload.status}
-                    : i)
+                items: state.items.map(i => i._id === action._id
+                    ? {...i, isDone: action.status} : i)
             }
         }
         case "DELETE_ITEM": {
             return {
                 ...state,
                 items: state.items.filter(item => item._id !== action._id)
+            }
+        }
+        case "LOADING_ITEM": {
+            return {
+                ...state,
+                loading: action.status
             }
         }
         default:

@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const config = require('config')
+const path = require('path')
 
 // Init Server
 const app = express()
@@ -12,6 +13,15 @@ const PORT = process.env.PORT || config.get('PORT')
 app.use(express.json())
 
 app.use('/api/items', require('./routes/api/items'))
+
+// Server static assets
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'))
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 // Start Server
 ;(async () => {

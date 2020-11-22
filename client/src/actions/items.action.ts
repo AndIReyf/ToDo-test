@@ -3,6 +3,7 @@ const ADD_ITEM = 'ADD_ITEM'
 const SET_TITLE = 'SET_TITLE'
 const SET_STATUS = 'SET_STATUS'
 const DELETE_ITEM = 'DELETE_ITEM'
+const LOADING_ITEM = 'LOADING_ITEM'
 
 // Action Creator
 export const items = {
@@ -15,11 +16,14 @@ export const items = {
     setTitle(payload: {_id: string, title: string}) {
         return {type: SET_TITLE, payload} as const
     },
-    setStatus(payload: {_id: string, status: boolean}) {
-        return {type: SET_STATUS, payload} as const
+    setStatus(_id: string, status: boolean) {
+        return {type: SET_STATUS, _id, status} as const
     },
     deleteItem(_id: string) {
         return {type: DELETE_ITEM, _id} as const
+    },
+    loading(status: boolean) {
+        return {type: LOADING_ITEM, status} as const
     }
 }
 
@@ -40,3 +44,4 @@ export type ItemActionType = ReturnType<typeof items.get>
     | ReturnType<typeof items.setTitle>
     | ReturnType<typeof items.setStatus>
     | ReturnType<typeof items.deleteItem>
+    | ReturnType<typeof items.loading>

@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FocusEvent, KeyboardEvent} from "react";
 import '../editable/EditableText.css'
 
-export function MyInput({onKeyPress, onChange, onBlur, value}: PropsType) {
+export const MyInput = React.memo(function MyInput({onKeyPress, onChange, onBlur, value}: PropsType) {
     return (
         <input
             onKeyPress={onKeyPress}
@@ -13,7 +13,7 @@ export function MyInput({onKeyPress, onChange, onBlur, value}: PropsType) {
             className='editable-input'
         />
     )
-}
+})
 
 type PropsType = {
     value: string

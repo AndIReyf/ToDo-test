@@ -2,12 +2,12 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 import {Header} from "../navbar/Navbar";
-import {Todo} from "../todolist/TodoList";
+import {TodoList} from "../todolist/TodoList";
 import {Container} from 'reactstrap';
 import {useDispatch} from "react-redux";
 import {fetchItems} from "../../thunk/thunk.items";
 
-export function App() {
+export const App = React.memo(function App() {
     const dispatch = useDispatch()
 
     React.useEffect(() => {
@@ -18,8 +18,8 @@ export function App() {
         <div className="App">
             <Header/>
             <Container>
-                <Todo/>
+                <TodoList/>
             </Container>
         </div>
     )
-}
+})
