@@ -1,0 +1,4 @@
+{
+  "PORT": 5000,
+  "mongoURI": "mongodb+srv://Andy:123qweasdzxc@todo.a7jem.mongodb.net/ToDo?retryWrites=true&w=majority"
+}
