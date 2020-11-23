@@ -2,9 +2,19 @@ const express = require('express')
 const mongoose = require('mongoose')
 const config = require('config')
 const path = require('path')
+// const cors = require('cors')
 
 // Init Server
 const app = express()
+
+// Init Port
+const PORT = process.env.PORT || config.get('PORT')
+
+// Middleware
+// app.use(cors())
+app.use(require('./middleware/cors'))
+app.use(express.json())
+app.use('/api/items', require('./routes/api/items'))
 
 // Server static assets
 if (process.env.NODE_ENV === 'production') {
@@ -14,14 +24,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
-
-// Init Port
-const PORT = process.env.PORT || config.get('PORT')
-
-// Middleware
-app.use(require('./middleware/cors'))
-app.use(express.json())
-app.use('/api/items', require('./routes/api/items'))
 
 // Start Server
 ;(async () => {

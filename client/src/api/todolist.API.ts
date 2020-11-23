@@ -1,28 +1,24 @@
 import axios from "axios"
 
-const instance = axios.create({
-    baseURL: 'http://localhost:3000/api/items'
-})
-
 export const todolistAPI = {
     async getItems() {
-        const res = await instance.get<ResponseItemsType>('/')
+        const res = await axios.get<ResponseItemsType>('/api/items')
         return res.data
     },
     async addItem(title: string, order: number) {
-        const res = await instance.post<ResponseType>('/', {title, order})
+        const res = await axios.post<ResponseType>('/api/items', {title, order})
         return res.data
     },
     async changeTitle(id: string, title: string) {
-        const res = await instance.put<ResponseType>('/', {id, title})
+        const res = await axios.put<ResponseType>('/api/items', {id, title})
         return res.data
     },
     async changeStatus(id: string, status: boolean) {
-        const res = await instance.put<ResponseType>('/status', {id, status})
+        const res = await axios.put<ResponseType>('api/items/status', {id, status})
         return res.data
     },
     deleteItem(id: string) {
-        return instance.delete(`/${id}`) as Promise<ResponseMsgType>
+        return axios.delete(`api/items/${id}`) as Promise<ResponseMsgType>
     },
 }
 
