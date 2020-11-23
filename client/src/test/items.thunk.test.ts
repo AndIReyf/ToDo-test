@@ -1,4 +1,4 @@
-import {deleteItem, fetchItems, setStatus} from "../thunk/thunk.items";
+import {addItem, changeTitle, deleteItem, fetchItems, setStatus} from "../thunk/thunk.items";
 import {ResponseItemsType, ResponseMsgType, ResponseType, todolistAPI} from "../api/todolist.API";
 import {items} from "../actions/items.action";
 
@@ -22,7 +22,7 @@ const fetchItemsRes: ResponseItemsType = [
     }
 ]
 
-const setTitleRes: ResponseType = {
+const res: ResponseType = {
     _id: '1',
     date: '20.02.2020',
     isDone: true,
@@ -30,22 +30,23 @@ const setTitleRes: ResponseType = {
     title: 'Jest'
 }
 
-
 describe('Thunk tests', () => {
-
-
-    todolistAPIMock.changeTitle.mockReturnValue(Promise.resolve(setTitleRes))
+    todolistAPIMock.changeTitle.mockReturnValue(Promise.resolve(res))
     todolistAPIMock.getItems.mockReturnValue(Promise.resolve(fetchItemsRes))
     todolistAPIMock.deleteItem.mockReturnValue(Promise.resolve(delRes))
+    todolistAPIMock.addItem.mockReturnValue(Promise.resolve(res))
+    todolistAPIMock.changeTitle.mockReturnValue(Promise.resolve(res))
 
     beforeEach(() => {
         dispatchMock.mockClear()
         todolistAPIMock.deleteItem.mockClear()
         todolistAPIMock.getItems.mockClear()
         todolistAPIMock.changeTitle.mockClear()
+        todolistAPIMock.addItem.mockClear()
+        todolistAPIMock.changeTitle.mockClear()
     })
 
-    it('Delete success', async () => {
+    it('Delete item success', async () => {
         const thunk = deleteItem('1')
         await thunk(dispatchMock)
 
@@ -65,12 +66,27 @@ describe('Thunk tests', () => {
     })
 
     it('Set status success', async () => {
-        const thunk = setStatus('1', false)
+        const thunk = setStatus('1', true)
+        await thunk(dispatchMock)
+
+        expect(dispatchMock).toBeCalledTimes(3)
+    })
+
+    it('Add item success', async () => {
+        const thunk = addItem('React', 5)
         await thunk(dispatchMock)
 
         expect(dispatchMock).toBeCalledTimes(3)
         expect(dispatchMock).toHaveBeenNthCalledWith(1, items.loading(true))
         expect(dispatchMock).toHaveBeenNthCalledWith(2, items.loading(false))
-        expect(dispatchMock).toHaveBeenLastCalledWith(false)
+    })
+
+    it('Change title item success', async () => {
+        const thunk = changeTitle('1', 'React')
+        await thunk(dispatchMock)
+
+        expect(dispatchMock).toBeCalledTimes(3)
+        expect(dispatchMock).toHaveBeenNthCalledWith(1, items.loading(true))
+        expect(dispatchMock).toHaveBeenNthCalledWith(2, items.loading(false))
     })
 })
