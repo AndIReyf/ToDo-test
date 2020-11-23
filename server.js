@@ -6,15 +6,6 @@ const path = require('path')
 // Init Server
 const app = express()
 
-// Init Port
-const PORT = process.env.PORT || config.get('PORT')
-
-// Middleware
-app.use(require('./middleware/cors'))
-app.use(express.json())
-
-app.use('/api/items', require('./routes/api/items'))
-
 // Server static assets
 if (process.env.NODE_ENV === 'production') {
     // Set static folder
@@ -23,6 +14,14 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
+
+// Init Port
+const PORT = process.env.PORT || config.get('PORT')
+
+// Middleware
+app.use(require('./middleware/cors'))
+app.use(express.json())
+app.use('/api/items', require('./routes/api/items'))
 
 // Start Server
 ;(async () => {
